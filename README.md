@@ -10,7 +10,7 @@
 :built-with: terraform
 -->
 
-# Amazon EKS
+# Kubernetes Namespace
 
 [![Maintained by Gruntwork.io](https://img.shields.io/badge/maintained%20by-gruntwork.io-%235849a6.svg)](https://gruntwork.io/?ref=repo_k8s_namespace)
 ![Terraform Version](https://img.shields.io/badge/tf-%3E%3D0.12.26-blue.svg)
