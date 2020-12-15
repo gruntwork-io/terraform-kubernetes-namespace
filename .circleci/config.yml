@@ -1,0 +1,103 @@
+# The base environment variables map, that is common across both the build machines
+environment: &environment
+    GRUNTWORK_INSTALLER_VERSION: v0.0.30
+    TERRATEST_LOG_PARSER_VERSION: v0.30.12
+    MODULE_CI_VERSION: v0.29.1
+    TERRAFORM_VERSION: 0.13.5
+    TERRAGRUNT_VERSION: NONE
+    PACKER_VERSION: NONE
+    K8S_VERSION: v1.17.0
+    GOLANG_VERSION: 1.14
+    KUBECONFIG: /home/circleci/.kube/config
+
+defaults: &defaults
+  machine:
+    enabled: true
+    image: "ubuntu-1604:201903-01"
+  environment: *environment
+
+
+install_gruntwork_utils: &install_gruntwork_utils
+  name: install gruntwork utils
+  command: |
+    curl -Ls https://raw.githubusercontent.com/gruntwork-io/gruntwork-installer/master/bootstrap-gruntwork-installer.sh | bash /dev/stdin --version "${GRUNTWORK_INSTALLER_VERSION}"
+    gruntwork-install --module-name "gruntwork-module-circleci-helpers" --repo "https://github.com/gruntwork-io/module-ci" --tag "${MODULE_CI_VERSION}"
+    gruntwork-install --module-name "kubernetes-circleci-helpers" --repo "https://github.com/gruntwork-io/module-ci" --tag "${MODULE_CI_VERSION}"
+    gruntwork-install --binary-name "terratest_log_parser" --repo "https://github.com/gruntwork-io/terratest" --tag "${TERRATEST_LOG_PARSER_VERSION}"
+    configure-environment-for-gruntwork-module \
+      --terraform-version ${TERRAFORM_VERSION} \
+      --terragrunt-version ${TERRAGRUNT_VERSION} \
+      --packer-version ${PACKER_VERSION} \
+      --go-version ${GOLANG_VERSION}
+
+
+version: 2
+jobs:
+  precommit:
+    environment: *environment
+    docker:
+      - image: circleci/python:3.8.1
+    steps:
+      - checkout
+      # Install gruntwork utilities
+      - run:
+          <<: *install_gruntwork_utils
+
+      # Fail the build if the pre-commit hooks don't pass. Note: if you run pre-commit install locally, these hooks will
+      # execute automatically every time before you commit, ensuring the build never fails at this step!
+      - run:
+          command: |
+            pip install pre-commit
+            pre-commit install
+            pre-commit run --all-files
+
+
+  integration_tests:
+    <<: *defaults
+    steps:
+      # The weird way you have to set PATH in Circle 2.0
+      - run: echo 'export PATH=$HOME/terraform:$HOME/packer:$PATH' >> $BASH_ENV
+
+      - checkout
+      - run:
+          <<: *install_gruntwork_utils
+
+      - run:
+          command: setup-minikube
+
+      # Execute main terratests
+      - run:
+          name: run integration tests
+          command: |
+            mkdir -p /tmp/logs
+            run-go-tests --path test --timeout 60m | tee /tmp/logs/all.log
+          no_output_timeout: 3600s
+
+      - run:
+          command: terratest_log_parser --testlog /tmp/logs/all.log --outputdir /tmp/logs
+          when: always
+      - store_artifacts:
+          path: /tmp/logs
+      - store_test_results:
+          path: /tmp/logs
+
+
+workflows:
+  version: 2
+  test-and-deploy:
+    jobs:
+    - precommit:
+        context:
+          - Gruntwork Admin
+        filters:
+          tags:
+            only: /^v.*/
+
+    - integration_tests:
+        requires:
+          - precommit
+        context:
+          - Gruntwork Admin
+        filters:
+          tags:
+            only: /^v.*/
