@@ -85,7 +85,7 @@ workflows:
   version: 2
   test-and-deploy:
     jobs:
-    - setup:
+    - precommit:
         context:
           - Gruntwork Admin
         filters:
@@ -94,7 +94,7 @@ workflows:
 
     - integration_tests:
         requires:
-          - setup
+          - precommit
         context:
           - Gruntwork Admin
         filters:
