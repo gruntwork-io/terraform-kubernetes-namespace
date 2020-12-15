@@ -58,6 +58,7 @@ jobs:
       # The weird way you have to set PATH in Circle 2.0
       - run: echo 'export PATH=$HOME/terraform:$HOME/packer:$PATH' >> $BASH_ENV
 
+      - checkout
       - run:
           <<: *install_gruntwork_utils
 
