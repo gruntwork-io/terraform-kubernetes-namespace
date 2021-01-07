@@ -18,13 +18,13 @@ be provided by this module:
 
 ## How do you use this module?
 
-* See the [root README](https://github.com/gruntwork-io/terraform-kubernetes-helm/blob/master/README.md) for instructions on using Terraform modules.
+* See the [root README](https://github.com/gruntwork-io/terraform-kubernetes-namespace/blob/main/README.md) for instructions on using Terraform modules.
 * This module uses [the `kubernetes` provider](https://www.terraform.io/docs/providers/kubernetes/index.html).
-* See the [examples](https://github.com/gruntwork-io/terraform-kubernetes-helm/tree/master/examples) folder for example
+* See the [examples](https://github.com/gruntwork-io/terraform-kubernetes-namespace/tree/main/examples) folder for example
   usage.
-* See [variables.tf](https://github.com/gruntwork-io/terraform-kubernetes-helm/blob/master/modules/k8s-namespace/variables.tf)
+* See [variables.tf](https://github.com/gruntwork-io/terraform-kubernetes-namespace/blob/main/modules/namespace/variables.tf)
   for all the variables you can set on this module.
-* See [outputs.tf](https://github.com/gruntwork-io/terraform-kubernetes-helm/blob/master/modules/k8s-namespace/outputs.tf)
+* See [outputs.tf](https://github.com/gruntwork-io/terraform-kubernetes-namespace/blob/main/modules/namespace/outputs.tf)
   for all the variables that are outputed by this module.
 
 
@@ -48,12 +48,12 @@ We create the namespaces using this module:
 
 ```
 module "core_namespace" {
-  source = "git::https://github.com/gruntwork-io/terraform-kubernetes-helm.git//modules/k8s-namespace?ref=v0.1.0"
+  source = "git::https://github.com/gruntwork-io/terraform-kubernetes-namespace.git//modules/namespace?ref=v0.1.0"
   name = "core"
 }
 
 module "analytics_namespace" {
-  source = "git::https://github.com/gruntwork-io/terraform-kubernetes-helm.git//modules/k8s-namespace?ref=v0.1.0"
+  source = "git::https://github.com/gruntwork-io/terraform-kubernetes-namespace.git//modules/namespace?ref=v0.1.0"
   name = "analytics"
 }
 ```
