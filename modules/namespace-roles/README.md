@@ -22,10 +22,10 @@ will be provided by this module:
 * This module uses [the `kubernetes` provider](https://www.terraform.io/docs/providers/kubernetes/index.html).
 * See the [examples](https://github.com/gruntwork-io/terraform-kubernetes-namespace/tree/main/examples) folder for example
   usage.
-* See [variables.tf](https://github.com/gruntwork-io/terraform-kubernetes-namespace/blob/main/modules/k8s-namespace-roles/variables.tf)
+* See [variables.tf](https://github.com/gruntwork-io/terraform-kubernetes-namespace/blob/main/modules/namespace-roles/variables.tf)
   for all the variables you can set on this module.
-* See [outputs.tf](https://github.com/gruntwork-io/terraform-kubernetes-namespace/blob/main/modules/k8s-namespace-roles/outputs.tf)
-  for all the variables that are outputed by this module.
+* See [outputs.tf](https://github.com/gruntwork-io/terraform-kubernetes-namespace/blob/main/modules/namespace-roles/outputs.tf)
+  for all the variables that are outputted by this module.
 
 
 ## What is Kubernetes Role Based Access Control (RBAC)?
