@@ -11,14 +11,14 @@ can be used to declaratively create and update `ServiceAccounts` and the bound p
 
 ## How do you use this module?
 
-* See the [root README](https://github.com/gruntwork-io/terraform-kubernetes-namespace/blob/master/README.md) for
+* See the [root README](https://github.com/gruntwork-io/terraform-kubernetes-namespace/blob/main/README.md) for
   instructions on using Terraform modules.
 * This module uses [the `kubernetes` provider](https://www.terraform.io/docs/providers/kubernetes/index.html).
-* See the [examples](https://github.com/gruntwork-io/terraform-kubernetes-namespace/tree/master/examples) folder for example
+* See the [examples](https://github.com/gruntwork-io/terraform-kubernetes-namespace/tree/main/examples) folder for example
   usage.
-* See [variables.tf](https://github.com/gruntwork-io/terraform-kubernetes-namespace/blob/master/modules/k8s-service-account/variables.tf)
+* See [variables.tf](https://github.com/gruntwork-io/terraform-kubernetes-namespace/blob/main/modules/k8s-service-account/variables.tf)
   for all the variables you can set on this module.
-* See [outputs.tf](https://github.com/gruntwork-io/terraform-kubernetes-namespace/blob/master/modules/k8s-service-account/outputs.tf)
+* See [outputs.tf](https://github.com/gruntwork-io/terraform-kubernetes-namespace/blob/main/modules/k8s-service-account/outputs.tf)
   for all the variables that are outputed by this module.
 
 
