@@ -1,0 +1,38 @@
+# Terraform
+.terraform
+terraform.tfvars
+*.tfstate
+*.tfstate.backup
+*.tfstate.lock.*
+
+# OS X
+.history
+.DS_Store
+
+# IntelliJ
+.idea_modules
+*.iml
+*.iws
+*.ipr
+.idea/
+build/
+*/build/
+out/
+
+# Terragrunt
+.terragrunt-cache
+
+# Terratest
+.test-data
+
+# python
+__pycache__
+*.pyc
+.mypy_cache
+
+.TestStages
+
+
+# Ignore Terraform lock files, as we want to test the Terraform code in these repos with the latest provider
+# versions.
+.terraform.lock.hcl
