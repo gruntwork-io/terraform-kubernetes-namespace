@@ -12,7 +12,7 @@ spec:
   serviceAccountName: {{ .ServiceAccountName }}
   containers:
   - name: main
-    image: tutum/curl
+    image: curlimages/curl
     # This is intentional. Because of the way pods work, the container needs to be up and running as a service in order
     # to run arbitrary commands. Therewore, we use a sleep here to create a pseudo service container that houses the
     # curl binary that we can then drop into and use via `kubectl exec`.
