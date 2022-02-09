@@ -138,10 +138,10 @@ func validateRbacAccessAll(t *testing.T, k8sNamespaceTerratestOptions *terraform
 	defaultNamespaceTemplateArgs := TemplateArgs{
 		Namespace: "default",
 	}
-	checkCreatePod := RenderTemplateAsString(t, "./kubefixtures/namespace-check-create-pod.json.tpl", templateArgs)
-	checkListPod := RenderTemplateAsString(t, "./kubefixtures/namespace-check-list-pod.json.tpl", templateArgs)
-	checkDefaultCreatePod := RenderTemplateAsString(t, "./kubefixtures/namespace-check-create-pod.json.tpl", defaultNamespaceTemplateArgs)
-	checkDefaultListPod := RenderTemplateAsString(t, "./kubefixtures/namespace-check-list-pod.json.tpl", defaultNamespaceTemplateArgs)
+	checkCreatePod := RenderTemplateAsString(t, "./kubefixtures/namespace-check-create-pod.json.tmpl", templateArgs)
+	checkListPod := RenderTemplateAsString(t, "./kubefixtures/namespace-check-list-pod.json.tmpl", templateArgs)
+	checkDefaultCreatePod := RenderTemplateAsString(t, "./kubefixtures/namespace-check-create-pod.json.tmpl", defaultNamespaceTemplateArgs)
+	checkDefaultListPod := RenderTemplateAsString(t, "./kubefixtures/namespace-check-list-pod.json.tmpl", defaultNamespaceTemplateArgs)
 
 	// Verify read write access to the targeted namespace using auth can-i API, but not to the default namespace
 	checkAccessForServiceAccount(
@@ -170,10 +170,10 @@ func validateRbacAccessReadOnly(t *testing.T, k8sNamespaceTerratestOptions *terr
 	defaultNamespaceTemplateArgs := TemplateArgs{
 		Namespace: "default",
 	}
-	checkCreatePod := RenderTemplateAsString(t, "./kubefixtures/namespace-check-create-pod.json.tpl", templateArgs)
-	checkListPod := RenderTemplateAsString(t, "./kubefixtures/namespace-check-list-pod.json.tpl", templateArgs)
-	checkDefaultCreatePod := RenderTemplateAsString(t, "./kubefixtures/namespace-check-create-pod.json.tpl", defaultNamespaceTemplateArgs)
-	checkDefaultListPod := RenderTemplateAsString(t, "./kubefixtures/namespace-check-list-pod.json.tpl", defaultNamespaceTemplateArgs)
+	checkCreatePod := RenderTemplateAsString(t, "./kubefixtures/namespace-check-create-pod.json.tmpl", templateArgs)
+	checkListPod := RenderTemplateAsString(t, "./kubefixtures/namespace-check-list-pod.json.tmpl", templateArgs)
+	checkDefaultCreatePod := RenderTemplateAsString(t, "./kubefixtures/namespace-check-create-pod.json.tmpl", defaultNamespaceTemplateArgs)
+	checkDefaultListPod := RenderTemplateAsString(t, "./kubefixtures/namespace-check-list-pod.json.tmpl", defaultNamespaceTemplateArgs)
 
 	// Verify read only access to the targeted namespace using auth can-i API, but not to the default namespace
 	checkAccessForServiceAccount(
@@ -206,7 +206,7 @@ func checkAccessForServiceAccount(
 	// assuming the ServiceAccount credentials. This way, you can verify permissions associated with the Service
 	// Account.
 	templateArgs := TemplateArgs{Namespace: namespace, ServiceAccountName: serviceAccountName}
-	curlKubeapiResourceConfig := RenderTemplateAsString(t, "./kubefixtures/curl-kubeapi-as-service-account.yml.tpl", templateArgs)
+	curlKubeapiResourceConfig := RenderTemplateAsString(t, "./kubefixtures/curl-kubeapi-as-service-account.yml.tmpl", templateArgs)
 	defer k8s.KubectlDeleteFromString(t, kubectlOptions, curlKubeapiResourceConfig)
 	k8s.KubectlApplyFromString(t, kubectlOptions, curlKubeapiResourceConfig)
 	curlPodName := fmt.Sprintf("%s-curl", serviceAccountName)
