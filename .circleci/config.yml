@@ -1,5 +1,6 @@
 # The base environment variables map, that is common across both the build machines
-environment: &environment
+env: &env
+  environment:
     GRUNTWORK_INSTALLER_VERSION: v0.0.30
     TERRATEST_LOG_PARSER_VERSION: v0.30.12
     MODULE_CI_VERSION: v0.31.0
@@ -15,7 +16,7 @@ defaults: &defaults
   machine:
     enabled: true
     image: "ubuntu-1604:201903-01"
-  environment: *environment
+  <<: *env
 
 
 install_gruntwork_utils: &install_gruntwork_utils
@@ -35,7 +36,7 @@ install_gruntwork_utils: &install_gruntwork_utils
 version: 2
 jobs:
   precommit:
-    environment: *environment
+    <<: *env
     docker:
       - image: circleci/python:3.8.1
     steps:
@@ -50,7 +51,7 @@ jobs:
           command: |
             pip install pre-commit
             go get golang.org/x/tools/cmd/goimports
-            export GOPATH=~/go/bin && export PATH=$PATH:$GOPATH 
+            export GOPATH=~/go/bin && export PATH=$PATH:$GOPATH
             pre-commit install
             pre-commit run --all-files
 
