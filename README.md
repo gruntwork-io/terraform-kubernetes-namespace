@@ -13,7 +13,7 @@
 # Kubernetes Namespace
 
 [![Maintained by Gruntwork.io](https://img.shields.io/badge/maintained%20by-gruntwork.io-%235849a6.svg)](https://gruntwork.io/?ref=repo_k8s_namespace)
-![Terraform Version](https://img.shields.io/badge/tf-%3E%3D0.12.26-blue.svg)
+![Terraform Version](https://img.shields.io/badge/tf-%3E%3D1.1.0-blue.svg)
 
 This repo contains a Module for managing [Kubernetes
 Namespaces](https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/) with

@@ -4,21 +4,18 @@ env: &env
     GRUNTWORK_INSTALLER_VERSION: v0.0.30
     TERRATEST_LOG_PARSER_VERSION: v0.30.12
     MODULE_CI_VERSION: v0.31.0
-    TERRAFORM_VERSION: 1.0.3
+    TERRAFORM_VERSION: 1.1.4
     TERRAGRUNT_VERSION: NONE
     PACKER_VERSION: NONE
     K8S_VERSION: v1.17.0
     GOLANG_VERSION: 1.16
     GO111MODULE: auto
     KUBECONFIG: /home/circleci/.kube/config
-
 defaults: &defaults
   machine:
     enabled: true
     image: "ubuntu-1604:201903-01"
   <<: *env
-
-
 install_gruntwork_utils: &install_gruntwork_utils
   name: install gruntwork utils
   command: |
@@ -31,8 +28,6 @@ install_gruntwork_utils: &install_gruntwork_utils
       --terragrunt-version ${TERRAGRUNT_VERSION} \
       --packer-version ${PACKER_VERSION} \
       --go-version ${GOLANG_VERSION}
-
-
 version: 2
 jobs:
   precommit:
@@ -44,7 +39,6 @@ jobs:
       # Install gruntwork utilities
       - run:
           <<: *install_gruntwork_utils
-
       # Fail the build if the pre-commit hooks don't pass. Note: if you run pre-commit install locally, these hooks will
       # execute automatically every time before you commit, ensuring the build never fails at this step!
       - run:
@@ -54,21 +48,16 @@ jobs:
             export GOPATH=~/go/bin && export PATH=$PATH:$GOPATH
             pre-commit install
             pre-commit run --all-files
-
-
   integration_tests:
     <<: *defaults
     steps:
       # The weird way you have to set PATH in Circle 2.0
       - run: echo 'export PATH=$HOME/terraform:$HOME/packer:$PATH' >> $BASH_ENV
-
       - checkout
       - run:
           <<: *install_gruntwork_utils
-
       - run:
           command: setup-minikube
-
       # Execute main terratests
       - run:
           name: run integration tests
@@ -76,7 +65,6 @@ jobs:
             mkdir -p /tmp/logs
             run-go-tests --path test --timeout 60m | tee /tmp/logs/all.log
           no_output_timeout: 3600s
-
       - run:
           command: terratest_log_parser --testlog /tmp/logs/all.log --outputdir /tmp/logs
           when: always
@@ -84,24 +72,21 @@ jobs:
           path: /tmp/logs
       - store_test_results:
           path: /tmp/logs
-
-
 workflows:
   version: 2
   test-and-deploy:
     jobs:
-    - precommit:
-        context:
-          - Gruntwork Admin
-        filters:
-          tags:
-            only: /^v.*/
-
-    - integration_tests:
-        requires:
-          - precommit
-        context:
-          - Gruntwork Admin
-        filters:
-          tags:
-            only: /^v.*/
+      - precommit:
+          context:
+            - Gruntwork Admin
+          filters:
+            tags:
+              only: /^v.*/
+      - integration_tests:
+          requires:
+            - precommit
+          context:
+            - Gruntwork Admin
+          filters:
+            tags:
+              only: /^v.*/
