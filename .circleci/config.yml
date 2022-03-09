@@ -1,20 +1,20 @@
 # The base environment variables map, that is common across both the build machines
 env: &env
   environment:
-    GRUNTWORK_INSTALLER_VERSION: v0.0.30
-    TERRATEST_LOG_PARSER_VERSION: v0.30.12
-    MODULE_CI_VERSION: v0.31.0
-    TERRAFORM_VERSION: 1.1.4
+    GRUNTWORK_INSTALLER_VERSION: v0.0.38
+    TERRATEST_LOG_PARSER_VERSION: v0.40.6
+    MODULE_CI_VERSION: v0.46.1
+    TERRAFORM_VERSION: 1.1.7
     TERRAGRUNT_VERSION: NONE
     PACKER_VERSION: NONE
-    K8S_VERSION: v1.17.0
+    K8S_VERSION: v1.21.7
     GOLANG_VERSION: 1.16
     GO111MODULE: auto
     KUBECONFIG: /home/circleci/.kube/config
 defaults: &defaults
   machine:
     enabled: true
-    image: "ubuntu-1604:201903-01"
+    image: "ubuntu-2004:202111-02"
   <<: *env
 install_gruntwork_utils: &install_gruntwork_utils
   name: install gruntwork utils
@@ -33,7 +33,7 @@ jobs:
   precommit:
     <<: *env
     docker:
-      - image: circleci/python:3.8.1
+      - image: circleci/python:3.10.1
     steps:
       - checkout
       # Install gruntwork utilities
