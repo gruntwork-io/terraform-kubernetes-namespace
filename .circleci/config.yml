@@ -33,7 +33,7 @@ jobs:
   precommit:
     <<: *env
     docker:
-      - image: circleci/python:3.10.1
+      - image: "cimg/python:3.10.1"
     steps:
       - checkout
       # Install gruntwork utilities
