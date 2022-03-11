@@ -14,7 +14,7 @@ env: &env
 defaults: &defaults
   machine:
     enabled: true
-    image: "ubuntu-2004:202111-02"
+    image: ubuntu-2004:202111-02
   <<: *env
 install_gruntwork_utils: &install_gruntwork_utils
   name: install gruntwork utils
@@ -33,7 +33,7 @@ jobs:
   precommit:
     <<: *env
     docker:
-      - image: "cimg/python:3.10.1"
+      - image: cimg/python:3.10.1
     steps:
       - checkout
       # Install gruntwork utilities
@@ -48,6 +48,7 @@ jobs:
             export GOPATH=~/go/bin && export PATH=$PATH:$GOPATH
             pre-commit install
             pre-commit run --all-files
+    resource_class: small
   integration_tests:
     <<: *defaults
     steps:
