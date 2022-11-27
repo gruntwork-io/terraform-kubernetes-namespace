@@ -8,6 +8,12 @@ variable "name" {
   type        = string
 }
 
+variable "cluster_name" {
+  description = "Name of the cluster"
+  type        = string
+  default     = ""
+}
+
 variable "kubectl_config_context_name" {
   description = "The config context to use when authenticating to the Kubernetes cluster. If empty, defaults to the current context specified in the kubeconfig file."
   type        = string
@@ -22,12 +28,6 @@ variable "kubectl_config_path" {
 
 variable "cluster_endpoint" {
   description = "The hostname (in form of URI) of the Kubernetes API"
-  type        = string
-  default     = ""
-}
-
-variable "cluster_token" {
-  description = "The token of your service account"
   type        = string
   default     = ""
 }
