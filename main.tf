@@ -4,25 +4,29 @@
 # ServiceAccounts that are bound to each default role.
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-terraform {
-  # This module is now only being tested with Terraform 1.1.x. However, to make upgrading easier, we are setting 1.0.0 as the minimum version.
-  required_version = ">= 1.0.0"
-
-  required_providers {
-    kubernetes = {
-      source  = "hashicorp/kubernetes"
-      version = ">= 2.0"
-    }
-  }
-}
-
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # CONFIGURE OUR KUBERNETES CONNECTIONS
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 provider "kubernetes" {
-  config_context = var.kubectl_config_context_name
-  config_path    = var.kubectl_config_path
+  # file config:
+  config_context = var.kubectl_config_path == "" ? null : var.kubectl_config_context_name
+  config_path    = var.kubectl_config_path == "" ? null : var.kubectl_config_path
+
+  # credentials config:
+  host                   = var.kubectl_config_path == "" ? var.cluster_endpoint : null
+  token                  = var.kubectl_config_path == "" ? var.cluster_token : null
+  cluster_ca_certificate = var.kubectl_config_path == "" ? base64decode(var.cluster_ca_certificate) : null
+
+  # exec plugins:
+  dynamic "exec" {
+    for_each = var.cluster_token == "" ? var.exec_plugins : {}
+    content {
+      api_version = exec.value.api_version
+      args        = exec.value.args
+      command     = exec.value.command
+    }
+  }
 }
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

@@ -86,3 +86,50 @@ Please see [Contributing to the Gruntwork Infrastructure as Code Library](https:
 ## License
 
 Please see [LICENSE.txt](https://github.com/gruntwork-io/terraform-kubernetes-namespace/blob/main/LICENSE.txt) for details on how the code in this repo is licensed.
+<!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
+## Requirements
+
+| Name | Version |
+|------|---------|
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.2.0 |
+| <a name="requirement_kubernetes"></a> [kubernetes](#requirement\_kubernetes) | >= 2.11 |
+
+## Providers
+
+No providers.
+
+## Modules
+
+| Name | Source | Version |
+|------|--------|---------|
+| <a name="module_namespace"></a> [namespace](#module\_namespace) | ./modules/namespace | n/a |
+| <a name="module_service_account_access_all"></a> [service\_account\_access\_all](#module\_service\_account\_access\_all) | ./modules/service-account | n/a |
+| <a name="module_service_account_access_read_only"></a> [service\_account\_access\_read\_only](#module\_service\_account\_access\_read\_only) | ./modules/service-account | n/a |
+
+## Resources
+
+No resources.
+
+## Inputs
+
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| <a name="input_cluster_ca_certificate"></a> [cluster\_ca\_certificate](#input\_cluster\_ca\_certificate) | The root certificates bundle for TLS authentication | `string` | `""` | no |
+| <a name="input_cluster_endpoint"></a> [cluster\_endpoint](#input\_cluster\_endpoint) | The hostname (in form of URI) of the Kubernetes API | `string` | `""` | no |
+| <a name="input_cluster_token"></a> [cluster\_token](#input\_cluster\_token) | The token of your service account | `string` | `""` | no |
+| <a name="input_create_resources"></a> [create\_resources](#input\_create\_resources) | Set to false to have this module skip creating resources. | `bool` | `true` | no |
+| <a name="input_exec_plugins"></a> [exec\_plugins](#input\_exec\_plugins) | The Configuration block to use an exec-based credential plugin | `map(any)` | `{}` | no |
+| <a name="input_kubectl_config_context_name"></a> [kubectl\_config\_context\_name](#input\_kubectl\_config\_context\_name) | The config context to use when authenticating to the Kubernetes cluster. If empty, defaults to the current context specified in the kubeconfig file. | `string` | `""` | no |
+| <a name="input_kubectl_config_path"></a> [kubectl\_config\_path](#input\_kubectl\_config\_path) | The path to the config file to use for kubectl. If empty, defaults to $HOME/.kube/config | `string` | `""` | no |
+| <a name="input_name"></a> [name](#input\_name) | Name of the namespace to be created | `string` | n/a | yes |
+
+## Outputs
+
+| Name | Description |
+|------|-------------|
+| <a name="output_name"></a> [name](#output\_name) | Name of the created namespace |
+| <a name="output_rbac_access_all_role"></a> [rbac\_access\_all\_role](#output\_rbac\_access\_all\_role) | The name of the RBAC role that grants admin level permissions on the namespace. |
+| <a name="output_rbac_access_read_only_role"></a> [rbac\_access\_read\_only\_role](#output\_rbac\_access\_read\_only\_role) | The name of the RBAC role that grants read only permissions on the namespace. |
+| <a name="output_service_account_access_all"></a> [service\_account\_access\_all](#output\_service\_account\_access\_all) | The name of the ServiceAccount that has admin level permissions. |
+| <a name="output_service_account_access_read_only"></a> [service\_account\_access\_read\_only](#output\_service\_account\_access\_read\_only) | The name of the ServiceAccount that has read only level permissions. |
+<!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
