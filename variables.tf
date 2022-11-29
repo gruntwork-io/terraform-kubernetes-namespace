@@ -8,8 +8,8 @@ variable "name" {
   type        = string
 }
 
-variable "cluster_name" {
-  description = "Name of the cluster"
+variable "cluster_token" {
+  description = "Token of the cluster to authen"
   type        = string
   default     = ""
 }

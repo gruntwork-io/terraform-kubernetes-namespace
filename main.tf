@@ -8,10 +8,6 @@
 # CONFIGURE OUR KUBERNETES CONNECTIONS
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-data "aws_eks_cluster_auth" "cluster" {
-  count = var.kubectl_config_path == "" && var.cluster_name != "" ? 1 : 0
-  name  = var.cluster_name
-}
 
 provider "kubernetes" {
   # file config:
@@ -20,12 +16,12 @@ provider "kubernetes" {
 
   # credentials config:
   host                   = var.kubectl_config_path == "" ? var.cluster_endpoint : null
-  token                  = var.kubectl_config_path == "" ? try(data.aws_eks_cluster_auth.cluster[0].token, null) : null
+  token                  = var.kubectl_config_path == "" ? var.cluster_token : null
   cluster_ca_certificate = var.kubectl_config_path == "" ? base64decode(var.cluster_ca_certificate) : null
 
   # exec plugins:
   dynamic "exec" {
-    for_each = var.kubectl_config_path == "" && var.cluster_name == "" ? var.exec_plugins : {}
+    for_each = var.kubectl_config_path == "" && var.cluster_token == "" ? var.exec_plugins : {}
     content {
       api_version = exec.value.api_version
       args        = exec.value.args

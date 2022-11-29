@@ -96,9 +96,7 @@ Please see [LICENSE.txt](https://github.com/gruntwork-io/terraform-kubernetes-na
 
 ## Providers
 
-| Name | Version |
-|------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | 4.41.0 |
+No providers.
 
 ## Modules
 
@@ -110,9 +108,7 @@ Please see [LICENSE.txt](https://github.com/gruntwork-io/terraform-kubernetes-na
 
 ## Resources
 
-| Name | Type |
-|------|------|
-| [aws_eks_cluster_auth.cluster](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/eks_cluster_auth) | data source |
+No resources.
 
 ## Inputs
 
@@ -120,7 +116,7 @@ Please see [LICENSE.txt](https://github.com/gruntwork-io/terraform-kubernetes-na
 |------|-------------|------|---------|:--------:|
 | <a name="input_cluster_ca_certificate"></a> [cluster\_ca\_certificate](#input\_cluster\_ca\_certificate) | The root certificates bundle for TLS authentication | `string` | `""` | no |
 | <a name="input_cluster_endpoint"></a> [cluster\_endpoint](#input\_cluster\_endpoint) | The hostname (in form of URI) of the Kubernetes API | `string` | `""` | no |
-| <a name="input_cluster_name"></a> [cluster\_name](#input\_cluster\_name) | Name of the cluster | `string` | `""` | no |
+| <a name="input_cluster_token"></a> [cluster\_token](#input\_cluster\_token) | Token of the cluster to authen | `string` | `""` | no |
 | <a name="input_create_resources"></a> [create\_resources](#input\_create\_resources) | Set to false to have this module skip creating resources. | `bool` | `true` | no |
 | <a name="input_exec_plugins"></a> [exec\_plugins](#input\_exec\_plugins) | The Configuration block to use an exec-based credential plugin | `map(any)` | `{}` | no |
 | <a name="input_kubectl_config_context_name"></a> [kubectl\_config\_context\_name](#input\_kubectl\_config\_context\_name) | The config context to use when authenticating to the Kubernetes cluster. If empty, defaults to the current context specified in the kubeconfig file. | `string` | `""` | no |
