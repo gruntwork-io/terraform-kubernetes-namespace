@@ -117,6 +117,7 @@ resource "kubernetes_role" "rbac_helm_resource_access" {
       "extensions",
       "apps",
       "rbac.authorization.k8s.io", # We include RBAC here because many helm charts create RBAC roles to minimize pod access.
+      "networking.k8s.io",         # Grants access to create Ingress objects.
     ]
 
     resources = ["*"]
