@@ -57,10 +57,10 @@ resource "kubernetes_namespace" "namespace" {
 module "namespace_roles" {
   source = "../namespace-roles"
 
-  namespace   = var.create_resources ? kubernetes_namespace.namespace[0].id : ""
+  namespace   = var.create_rbac_role_resources ? kubernetes_namespace.namespace[0].id : ""
   labels      = var.labels
   annotations = var.annotations
 
-  create_resources = var.create_resources
-  dependencies     = var.dependencies
+  create_rbac_role_resources = var.create_rbac_role_resources
+  dependencies               = var.dependencies
 }

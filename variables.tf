@@ -25,8 +25,8 @@ variable "kubectl_config_path" {
 # These variables are only used for testing purposes and should not be touched in normal operations.
 # ---------------------------------------------------------------------------------------------------------------------
 
-variable "create_resources" {
-  description = "Set to false to have this module skip creating resources."
+variable "create_rbac_role_resources" {
+  description = "Set to false to have this module skip creating Default RBAC roles for a Namespace resource"
   type        = bool
   default     = true
 }

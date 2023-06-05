@@ -35,7 +35,7 @@ module "namespace" {
   # source = "git::https://github.com/gruntwork-io/terraform-kubernetes-namespace.git//modules/namespace?ref=v0.1.0"
   source = "./modules/namespace"
 
-  create_resources = var.create_resources
+  create_rbac_role_resources = var.create_rbac_role_resources
   name             = var.name
 }
 
@@ -49,7 +49,7 @@ module "service_account_access_all" {
   # source = "git::https://github.com/gruntwork-io/terraform-kubernetes-namespace.git//modules/service-account?ref=v0.1.0"
   source = "./modules/service-account"
 
-  create_resources = var.create_resources
+  create_rbac_role_resources = var.create_rbac_role_resources
   name             = "${var.name}-admin"
   namespace        = module.namespace.name
   num_rbac_roles   = 1
@@ -73,7 +73,7 @@ module "service_account_access_read_only" {
   # source = "git::https://github.com/gruntwork-io/terraform-kubernetes-namespace.git//modules/service-account?ref=v0.1.0"
   source = "./modules/service-account"
 
-  create_resources = var.create_resources
+  create_rbac_role_resources = var.create_rbac_role_resources
   name             = "${var.name}-read-only"
   namespace        = module.namespace.name
   num_rbac_roles   = 1
