@@ -43,7 +43,7 @@ resource "null_resource" "dependency_getter" {
 # ---------------------------------------------------------------------------------------------------------------------
 
 resource "kubernetes_role" "rbac_role_access_all" {
-  count      = var.create_resources ? 1 : 0
+  count      = var.create_rbac_role_resources ? 1 : 0
   depends_on = [null_resource.dependency_getter]
 
   metadata {
@@ -61,7 +61,7 @@ resource "kubernetes_role" "rbac_role_access_all" {
 }
 
 resource "kubernetes_role" "rbac_role_access_read_only" {
-  count      = var.create_resources ? 1 : 0
+  count      = var.create_rbac_role_resources ? 1 : 0
   depends_on = [null_resource.dependency_getter]
 
   metadata {
@@ -81,7 +81,7 @@ resource "kubernetes_role" "rbac_role_access_read_only" {
 # Helm manages release information in Kubernetes Secrets in the Namespace that is targetted. As such, users who want to
 # manage deployments using Helm 3 will need access to Secrets in the target Namespace.
 resource "kubernetes_role" "rbac_helm_metadata_access" {
-  count      = var.create_resources ? 1 : 0
+  count      = var.create_rbac_role_resources ? 1 : 0
   depends_on = [null_resource.dependency_getter]
 
   metadata {
@@ -100,7 +100,7 @@ resource "kubernetes_role" "rbac_helm_metadata_access" {
 
 # These permissions should cover deployments for most of the Helm Charts.
 resource "kubernetes_role" "rbac_helm_resource_access" {
-  count      = var.create_resources ? 1 : 0
+  count      = var.create_rbac_role_resources ? 1 : 0
   depends_on = [null_resource.dependency_getter]
 
   metadata {

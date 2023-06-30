@@ -68,7 +68,7 @@ variable "secrets_for_pods" {
   default     = []
 }
 
-variable "create_resources" {
+variable "create_rbac_role_resources" {
   description = "Set to false to have this module skip creating resources. This weird parameter exists solely because Terraform does not support conditional modules. Therefore, this is a hack to allow you to conditionally decide if the Namespace should be created or not."
   type        = bool
   default     = true
